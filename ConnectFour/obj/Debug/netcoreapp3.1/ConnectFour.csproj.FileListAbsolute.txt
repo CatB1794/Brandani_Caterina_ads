@@ -1,0 +1,22 @@
+D:\Uni\Uni Y3\Algorithms and Data Structures\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.exe
+D:\Uni\Uni Y3\Algorithms and Data Structures\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.deps.json
+D:\Uni\Uni Y3\Algorithms and Data Structures\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.runtimeconfig.json
+D:\Uni\Uni Y3\Algorithms and Data Structures\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.runtimeconfig.dev.json
+D:\Uni\Uni Y3\Algorithms and Data Structures\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.dll
+D:\Uni\Uni Y3\Algorithms and Data Structures\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.pdb
+D:\Uni\Uni Y3\Algorithms and Data Structures\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.csprojAssemblyReference.cache
+D:\Uni\Uni Y3\Algorithms and Data Structures\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.AssemblyInfoInputs.cache
+D:\Uni\Uni Y3\Algorithms and Data Structures\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.AssemblyInfo.cs
+D:\Uni\Uni Y3\Algorithms and Data Structures\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.dll
+D:\Uni\Uni Y3\Algorithms and Data Structures\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.pdb
+C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.exe
+C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.deps.json
+C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.runtimeconfig.json
+C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.runtimeconfig.dev.json
+C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.dll
+C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.pdb
+C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.csprojAssemblyReference.cache
+C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.AssemblyInfoInputs.cache
+C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.AssemblyInfo.cs
+C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.dll
+C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.pdb
