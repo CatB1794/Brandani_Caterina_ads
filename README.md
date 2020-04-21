@@ -9,5 +9,5 @@ Features:
 - AI vs AI
 - Undo function
 
-Code is in C#
+Code is in C#.<br />
 Added a classic 7x6 game version as well.
