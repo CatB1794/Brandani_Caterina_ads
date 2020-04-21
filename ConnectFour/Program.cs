@@ -5,6 +5,8 @@ namespace ConnectFour
 {
     public class Program
     {
+        public static bool game = true;
+
         public static bool player = true;
 
         public static Random pcPlayer = new Random();
@@ -28,15 +30,15 @@ namespace ConnectFour
                 }
             }
 
-            Console.WriteLine("Do you wish to play against the AI or a human counterpart?\nEnter c for computer or h for human:");
+            Console.WriteLine("Do you wish to play against the AI or a human counterpart?\nEnter c for computer or h for human:\n(Otherwise if you wish to watch the AI's dish it out enter a)");
 
             string pcOrPeeps = "";
 
-            while (pcOrPeeps != "h" && pcOrPeeps != "c")
+            while (pcOrPeeps != "h" && pcOrPeeps != "c" && pcOrPeeps != "a")
             {
                 pcOrPeeps = Console.ReadLine();
 
-                if (pcOrPeeps != "h" && pcOrPeeps != "c")
+                if (pcOrPeeps != "h" && pcOrPeeps != "c" && pcOrPeeps != "a")
                 {
                     Console.WriteLine("That is neither a human or an AI option, try again.");
 
@@ -50,183 +52,15 @@ namespace ConnectFour
 
             if (pcOrPeeps == "h")
             {
-                while (true)
-                {
-                    if (player)
-                    {
-                        Console.WriteLine("Enter player 1 column: ");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Enter player 2 column: ");
-                    }
-
-                    int move;
-
-                    if (player)
-                    {
-                        move = 1;
-                    }
-                    else
-                    {
-                        move = 2;
-                    }
-
-                    string column = Console.ReadLine();
-
-                    int clmn;
-
-                    try
-                    {
-                        clmn = int.Parse(column);
-                    }
-                    catch (FormatException)
-                    {
-                        Console.WriteLine("Not a column, please try again.");
-
-                        continue;
-                    }
-
-                    int rowNum = GetPosition(clmn);
-
-                    if (rowNum < 1)
-                    {
-                        Console.WriteLine("Out of bounds, please try again.");
-
-                        continue;
-                    }
-                    else
-                    {
-                        Board[clmn, rowNum] = move;
-
-                        Undo.Push(new UndoMove(clmn, rowNum));
-                    }
-
-                    MoveUndo();
-
-                    player = !player;
-
-                    PrintBoard();
-
-                    if (GameWon(move))
-                    {
-                        Console.WriteLine("Player " + move + " won!");
-
-                        GameExit();
-
-                        return;
-                    }
-                    else if (GameTied() && !GameWon(move))
-                    {
-                        Console.WriteLine("The game has been tied, neither player wins.");
-
-                        GameExit();
-
-                        return;
-                    }
-                }
+                PvP();
             }
             else if (pcOrPeeps == "c")
             {
-                while (true)
-                {
-                    int ai = 0;
-
-                    int clmn = 0;
-
-                    if (player)
-                    {
-                        Console.WriteLine("Enter player 1 column: ");
-
-                        string column = Console.ReadLine();
-
-                        try
-                        {
-                            clmn = int.Parse(column);
-                        }
-                        catch (FormatException)
-                        {
-                            Console.WriteLine("Not a column, please try again.");
-
-                            continue;
-                        }
-                    }
-                    else
-                    {
-                        ai = PCPlayer(pcPlayer);
-
-                        Console.WriteLine("AI's turn: " + ai);
-                    }
-
-                    int move;
-
-                    if (player)
-                    {
-                        move = 1;
-                    }
-                    else
-                    {
-                        move = 2;
-                    }
-
-                    int rowNum = GetPosition(clmn);
-
-                    int aiRow = GetPosition(ai);
-
-                    if (move == 1)
-                    {
-                        if (rowNum < 1)
-                        {
-                            Console.WriteLine("Out of bounds, please try again.");
-
-                            continue;
-                        }
-                        else
-                        {
-                            Board[clmn, rowNum] = move;
-
-                            Undo.Push(new UndoMove(clmn, rowNum));
-
-                            MoveUndo();
-                        }
-                    }
-                    else
-                    {
-                        Board[ai, aiRow] = move;
-                    }
-
-                    player = !player;
-
-                    PrintBoard();
-
-                    if (GameWon(move))
-                    {
-                        if (move == 1)
-                        {
-                            Console.WriteLine("The human won!");
-
-                            GameExit();
-
-                            return;
-                        }
-                        else
-                        {
-                            Console.WriteLine("AI won, better luck next time.");
-
-                            GameExit();
-
-                            return;
-                        }
-                    }
-                    else if (GameTied() && !GameWon(move))
-                    {
-                        Console.WriteLine("The game has been tied, neither player wins.");
-
-                        GameExit();
-
-                        return;
-                    }
-                }
+                PvPC();
+            }
+            else if (pcOrPeeps == "a")
+            {
+                PCvPC();
             }
         }
 
@@ -269,6 +103,274 @@ namespace ConnectFour
             }
 
             Console.Write("\n");
+        }
+
+        //Player vs player method to be called when pcOrPeeps = "h" is entered.
+        public static void PvP()
+        {
+            while (game)
+            {
+                if (player)
+                {
+                    Console.WriteLine("Enter player 1 column: ");
+                }
+                else
+                {
+                    Console.WriteLine("Enter player 2 column: ");
+                }
+
+                int move;
+
+                if (player)
+                {
+                    move = 1;
+                }
+                else
+                {
+                    move = 2;
+                }
+
+                string column = Console.ReadLine();
+
+                int clmn;
+
+                try
+                {
+                    clmn = int.Parse(column);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Not a column, please try again.");
+
+                    continue;
+                }
+
+                int rowNum = GetPosition(clmn);
+
+                if (rowNum < 1)
+                {
+                    Console.WriteLine("Out of bounds, please try again.");
+
+                    continue;
+                }
+                else
+                {
+                    Board[clmn, rowNum] = move;
+
+                    Undo.Push(new UndoMove(clmn, rowNum));
+                }
+
+                MoveUndo();
+
+                player = !player;
+
+                PrintBoard();
+
+                if (GameWon(move))
+                {
+                    Console.WriteLine("Player " + move + " won!");
+
+                    GameExit();
+
+                    return;
+                }
+                else if (GameTied() && !GameWon(move))
+                {
+                    Console.WriteLine("The game has been tied, neither player wins.");
+
+                    GameExit();
+
+                    return;
+                }
+            }
+        }
+
+        //Player vs AI method to be called when pcOrPeeps = "c" is entered.
+        public static void PvPC()
+        {
+            while (game)
+            {
+                int ai = 0;
+
+                int clmn = 0;
+
+                if (player)
+                {
+                    Console.WriteLine("Enter player 1 column: ");
+
+                    string column = Console.ReadLine();
+
+                    try
+                    {
+                        clmn = int.Parse(column);
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Not a column, please try again.");
+
+                        continue;
+                    }
+                }
+                else
+                {
+                    ai = PCPlayer(pcPlayer);
+
+                    Console.WriteLine("AI's turn: " + ai);
+                }
+
+                int move;
+
+                if (player)
+                {
+                    move = 1;
+                }
+                else
+                {
+                    move = 2;
+                }
+
+                int rowNum = GetPosition(clmn);
+
+                int aiRow = GetPosition(ai);
+
+                if (move == 1)
+                {
+                    if (rowNum < 1)
+                    {
+                        Console.WriteLine("Out of bounds, please try again.");
+
+                        continue;
+                    }
+                    else
+                    {
+                        Board[clmn, rowNum] = move;
+
+                        Undo.Push(new UndoMove(clmn, rowNum));
+
+                        MoveUndo();
+                    }
+                }
+                else
+                {
+                    Board[ai, aiRow] = move;
+                }
+
+                player = !player;
+
+                PrintBoard();
+
+                if (GameWon(move))
+                {
+                    if (move == 1)
+                    {
+                        Console.WriteLine("The human won!");
+
+                        GameExit();
+
+                        return;
+                    }
+                    else
+                    {
+                        Console.WriteLine("AI won, better luck next time.");
+
+                        GameExit();
+
+                        return;
+                    }
+                }
+                else if (GameTied() && !GameWon(move))
+                {
+                    Console.WriteLine("The game has been tied, neither player wins.");
+
+                    GameExit();
+
+                    return;
+                }
+            }
+        }
+
+        //AI vs AI method to be called when pcOrPeeps = "a" is entered.
+        public static void PCvPC()
+        {
+            while (game)
+            {
+                int ai1 = 0;
+
+                int ai2 = 0;
+
+                if (player)
+                {
+                    ai1 = PCPlayer(pcPlayer);
+
+                    Console.WriteLine("AI 1's turn: " + ai1);
+                }
+                else
+                {
+                    ai2 = PCPlayer(pcPlayer);
+
+                    Console.WriteLine("AI 2's turn: " + ai2);
+                }
+
+                int move;
+
+                if (player)
+                {
+                    move = 1;
+                }
+                else
+                {
+                    move = 2;
+                }
+
+                int ai1Row = GetPosition(ai1);
+
+                int ai2Row = GetPosition(ai2);
+
+                if (move == 1)
+                {
+                    Board[ai1, ai1Row] = move;
+
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Board[ai2, ai2Row] = move;
+
+                    Console.ReadKey();
+                }
+
+                player = !player;
+
+                PrintBoard();
+
+                if (GameWon(move))
+                {
+                    if (move == 1)
+                    {
+                        Console.WriteLine("AI 1 won.");
+
+                        GameExit();
+
+                        return;
+                    }
+                    else
+                    {
+                        Console.WriteLine("AI 2 won.");
+
+                        GameExit();
+
+                        return;
+                    }
+                }
+                else if (GameTied() && !GameWon(move))
+                {
+                    Console.WriteLine("The game has been tied, neither AI wins.");
+
+                    GameExit();
+
+                    return;
+                }
+            }
         }
 
         //Gets the corresponding row to the column input and checks whether the move is valid.
@@ -341,11 +443,11 @@ namespace ConnectFour
             }
 
             //Ascending.
-            for (x = 4; x < boardCol; x++)
+            for (x = 1; x < (boardCol - 3); x++)
             {
-                for (y = 1; y < (boardRow - 3); y++)
+                for (y = 4; y < boardRow; y++)
                 {
-                    if (Board[x - 3, y + 3] == move && Board[x - 2, y + 2] == move && Board[x - 1, y + 1] == move && Board[x, y] == move)
+                    if (Board[x, y] == move && Board[x + 1, y - 1] == move && Board[x + 2, y - 2] == move && Board[x + 3, y - 3] == move)
                     {
                         return true;
                     }
