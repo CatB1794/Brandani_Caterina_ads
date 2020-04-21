@@ -1,4 +1,5 @@
-﻿using System;
+﻿//https://github.com/CatB1794/Brandani_Caterina_ADS
+using System;
 using System.Collections.Generic;
 
 namespace ConnectFour
@@ -110,24 +111,19 @@ namespace ConnectFour
         {
             while (game)
             {
+                int move;
+             
                 if (player)
                 {
+                    move = 1;
+
                     Console.WriteLine("Enter player 1 column: ");
                 }
                 else
                 {
-                    Console.WriteLine("Enter player 2 column: ");
-                }
-
-                int move;
-
-                if (player)
-                {
-                    move = 1;
-                }
-                else
-                {
                     move = 2;
+
+                    Console.WriteLine("Enter player 2 column: ");
                 }
 
                 string column = Console.ReadLine();
@@ -194,8 +190,12 @@ namespace ConnectFour
 
                 int clmn = 0;
 
+                int move;
+
                 if (player)
                 {
+                    move = 1;
+
                     Console.WriteLine("Enter player 1 column: ");
 
                     string column = Console.ReadLine();
@@ -213,20 +213,11 @@ namespace ConnectFour
                 }
                 else
                 {
+                    move = 2;
+
                     ai = PCPlayer(pcPlayer);
 
                     Console.WriteLine("AI's turn: " + ai);
-                }
-
-                int move;
-
-                if (player)
-                {
-                    move = 1;
-                }
-                else
-                {
-                    move = 2;
                 }
 
                 int rowNum = GetPosition(clmn);
@@ -294,32 +285,27 @@ namespace ConnectFour
         {
             while (game)
             {
+                int move;
+             
                 int ai1 = 0;
 
                 int ai2 = 0;
 
                 if (player)
                 {
+                    move = 1;
+
                     ai1 = PCPlayer(pcPlayer);
 
                     Console.WriteLine("AI 1's turn: " + ai1);
                 }
                 else
                 {
+                    move = 2;
+
                     ai2 = PCPlayer(pcPlayer);
 
                     Console.WriteLine("AI 2's turn: " + ai2);
-                }
-
-                int move;
-
-                if (player)
-                {
-                    move = 1;
-                }
-                else
-                {
-                    move = 2;
                 }
 
                 int ai1Row = GetPosition(ai1);
