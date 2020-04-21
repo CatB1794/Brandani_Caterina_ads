@@ -6,7 +6,7 @@ Game board of 5 Columns x 4 Rows.<br />
 Features:
 - Player vs Player
 - Player vs PC
-- Undo function
 - AI vs AI
+- Undo function
 
 Code is in C#
