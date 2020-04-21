@@ -7,5 +7,6 @@ Features:
 - Player vs Player
 - Player vs PC
 - Undo function
+- AI vs AI
 
 Code is in C#
