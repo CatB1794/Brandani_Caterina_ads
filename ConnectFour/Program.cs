@@ -1,5 +1,4 @@
-﻿//https://github.com/CatB1794/Brandani_Caterina_ADS
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ConnectFour
@@ -106,13 +105,36 @@ namespace ConnectFour
             Console.Write("\n");
         }
 
+        //Gets the corresponding row to the column input and checks whether the move is valid.
+        public static int GetPosition(int x)
+        {
+            int move = 0;
+
+            if (x > 0 && x < boardCol)
+            {
+                for (int y = 1; y < boardRow; y++)
+                {
+                    if (Board[x, y] == 0)
+                    {
+                        move = y;
+                    }
+                }
+            }
+            else
+            {
+                return move;
+            }
+
+            return move;
+        }
+
         //Player vs player method to be called when pcOrPeeps = "h" is entered.
         public static void PvP()
         {
             while (game)
             {
                 int move;
-             
+
                 if (player)
                 {
                     move = 1;
@@ -286,43 +308,30 @@ namespace ConnectFour
             while (game)
             {
                 int move;
-             
-                int ai1 = 0;
-
-                int ai2 = 0;
 
                 if (player)
                 {
                     move = 1;
 
-                    ai1 = PCPlayer(pcPlayer);
+                    int ai1 = PCPlayer(pcPlayer);
 
                     Console.WriteLine("AI 1's turn: " + ai1);
+                    
+                    int ai1Row = GetPosition(ai1);
+
+                    Board[ai1, ai1Row] = move;
                 }
                 else
                 {
                     move = 2;
 
-                    ai2 = PCPlayer(pcPlayer);
+                    int ai2 = PCPlayer(pcPlayer);
 
                     Console.WriteLine("AI 2's turn: " + ai2);
-                }
 
-                int ai1Row = GetPosition(ai1);
+                    int ai2Row = GetPosition(ai2);
 
-                int ai2Row = GetPosition(ai2);
-
-                if (move == 1)
-                {
-                    Board[ai1, ai1Row] = move;
-
-                    Console.ReadKey();
-                }
-                else
-                {
                     Board[ai2, ai2Row] = move;
-
-                    Console.ReadKey();
                 }
 
                 player = !player;
@@ -331,22 +340,11 @@ namespace ConnectFour
 
                 if (GameWon(move))
                 {
-                    if (move == 1)
-                    {
-                        Console.WriteLine("AI 1 won.");
+                    Console.WriteLine("AI " + move + " won.");
 
-                        GameExit();
+                    GameExit();
 
-                        return;
-                    }
-                    else
-                    {
-                        Console.WriteLine("AI 2 won.");
-
-                        GameExit();
-
-                        return;
-                    }
+                    return;
                 }
                 else if (GameTied() && !GameWon(move))
                 {
@@ -357,29 +355,6 @@ namespace ConnectFour
                     return;
                 }
             }
-        }
-
-        //Gets the corresponding row to the column input and checks whether the move is valid.
-        public static int GetPosition(int x)
-        {
-            int move = 0;
-
-            if (x > 0 && x < boardCol)
-            {
-                for (int y = 1; y < boardRow; y++)
-                {
-                    if (Board[x, y] == 0)
-                    {
-                        move = y;
-                    }
-                }
-            }
-            else
-            {
-                return move;
-            }
-
-            return move;
         }
 
         //Checks whether the board is full.
@@ -460,7 +435,7 @@ namespace ConnectFour
         {
             int move = rnd.Next(1, boardCol);
 
-            if (GetPosition(move) < 1)
+            while (GetPosition(move) < 1)
             {
                 move = rnd.Next(1, boardCol);
             }
