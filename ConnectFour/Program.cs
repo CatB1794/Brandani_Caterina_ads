@@ -199,7 +199,7 @@ namespace ConnectFour
                 player = !player;
 
                 PrintBoard();
-                
+
                 Replay.Enqueue(new GameMoves(clmn, rowNum, move));
 
                 if (GameWon(move))
@@ -210,7 +210,7 @@ namespace ConnectFour
 
                     return;
                 }
-                else if (GameTied() && !GameWon(move))
+                else if (TotalMoves() && !GameWon(move))
                 {
                     Console.WriteLine("The game has been tied, neither player wins.");
 
@@ -313,7 +313,7 @@ namespace ConnectFour
                         return;
                     }
                 }
-                else if (GameTied() && !GameWon(move))
+                else if (TotalMoves() && !GameWon(move))
                 {
                     Console.WriteLine("The game has been tied, neither player wins.");
 
@@ -338,10 +338,12 @@ namespace ConnectFour
                     int ai1 = PCPlayer(pcPlayer);
 
                     Console.WriteLine("AI 1's turn: " + ai1);
-                    
+
                     int ai1Row = GetPosition(ai1);
 
                     Board[ai1, ai1Row] = move;
+
+                    Replay.Enqueue(new GameMoves(ai1, ai1Row, move));
                 }
                 else
                 {
@@ -354,6 +356,8 @@ namespace ConnectFour
                     int ai2Row = GetPosition(ai2);
 
                     Board[ai2, ai2Row] = move;
+
+                    Replay.Enqueue(new GameMoves(ai2, ai2Row, move));
                 }
 
                 player = !player;
@@ -368,7 +372,7 @@ namespace ConnectFour
 
                     return;
                 }
-                else if (GameTied() && !GameWon(move))
+                else if (TotalMoves() && !GameWon(move))
                 {
                     Console.WriteLine("The game has been tied, neither AI wins.");
 
@@ -380,17 +384,11 @@ namespace ConnectFour
         }
 
         //Checks whether the board is full.
-        public static bool GameTied()
+        public static bool TotalMoves()
         {
-            for (int x = 1; x < boardCol; x++)
+            if (Replay.Count < ((boardCol - 1) * (boardRow - 1)))
             {
-                for (int y = 1; y < boardRow; y++)
-                {
-                    if (Board[x, y] == 0)
-                    {
-                        return false;
-                    }
-                }
+                return false;
             }
 
             return true;
@@ -493,7 +491,7 @@ namespace ConnectFour
             }
         }
 
-        //Records the game moves, once the game has finished it allows the user to review the game from the starting move.
+        //Once the game has finished it allows the user to review the game from the starting move, through the saved board states in the Replay Queue.
         public static void GameReplay()
         {
             string replayGame = "_";
@@ -504,7 +502,7 @@ namespace ConnectFour
 
                 replayGame = Console.ReadLine();
 
-                if (replayGame == "Y" || replayGame == "y") 
+                if (replayGame == "Y" || replayGame == "y")
                 {
                     for (int x = 1; x < boardCol; x++)
                     {
@@ -514,7 +512,7 @@ namespace ConnectFour
                         }
                     }
 
-                    for (int c = Replay.Count; c > 0; c--) 
+                    for (int c = Replay.Count; c > 0; c--)
                     {
                         GameMoves replay = Replay.Dequeue();
 
@@ -522,7 +520,7 @@ namespace ConnectFour
 
                         PrintBoard();
                     }
-                } 
+                }
                 else if (replayGame != "Y" && replayGame != "y" && replayGame != "")
                 {
                     Console.WriteLine("That is not valid input, try again.");
@@ -532,7 +530,7 @@ namespace ConnectFour
             }
         }
 
-        //Waits for a user input before exiting the game, allows user to be able to see who won, instead of immediately closing the console.
+        //Waits for a user input before exiting the game, allowing the user to be able to see who won, instead of immediately closing the console.
         public static void GameExit()
         {
             GameReplay();
