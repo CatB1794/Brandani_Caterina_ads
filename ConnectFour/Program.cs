@@ -17,7 +17,9 @@ namespace ConnectFour
 
         public static int[,] Board = new int[boardCol, boardRow];
 
-        public static Stack<UndoMove> Undo = new Stack<UndoMove>();
+        public static Stack<GameMoves> Undo = new Stack<GameMoves>();
+
+        public static Queue<GameMoves> Replay = new Queue<GameMoves>();
 
         public static void Main(string[] args)
         {
@@ -34,11 +36,11 @@ namespace ConnectFour
 
             string pcOrPeeps = "";
 
-            while (pcOrPeeps != "h" && pcOrPeeps != "c" && pcOrPeeps != "a")
+            while (pcOrPeeps != "h" && pcOrPeeps != "c" && pcOrPeeps != "a" && pcOrPeeps != "H" && pcOrPeeps != "C" && pcOrPeeps != "A")
             {
                 pcOrPeeps = Console.ReadLine();
 
-                if (pcOrPeeps != "h" && pcOrPeeps != "c" && pcOrPeeps != "a")
+                if (pcOrPeeps != "h" && pcOrPeeps != "c" && pcOrPeeps != "a" && pcOrPeeps != "H" && pcOrPeeps != "C" && pcOrPeeps != "A")
                 {
                     Console.WriteLine("That is neither a human or an AI option, try again.");
 
@@ -46,19 +48,19 @@ namespace ConnectFour
                 }
             }
 
-            Console.WriteLine("Game rules: enter a column number between 1-" + (boardCol - 1) + " to play.\nIf you wish to undo press u, otherwise press enter to continue.");
+            Console.WriteLine("Game rules: enter a column number between 1-" + (boardCol - 1) + " to play.\n");
 
             PrintBoard();
 
-            if (pcOrPeeps == "h")
+            if (pcOrPeeps == "h" || pcOrPeeps == "H")
             {
                 PvP();
             }
-            else if (pcOrPeeps == "c")
+            else if (pcOrPeeps == "c" || pcOrPeeps == "C")
             {
                 PvPC();
             }
-            else if (pcOrPeeps == "a")
+            else if (pcOrPeeps == "a" || pcOrPeeps == "A")
             {
                 PCvPC();
             }
@@ -67,6 +69,20 @@ namespace ConnectFour
         //Prints the game board with the rows and colums numbered.
         public static void PrintBoard()
         {
+            for (int x = 1; x < boardCol; x++)
+            {
+                Console.Write("   " + x);
+            }
+
+            Console.Write("\n");
+
+            for (int x = 1; x < boardCol; x++)
+            {
+                Console.Write("   -");
+            }
+
+            Console.Write("\n");
+
             for (int y = 1; y < boardRow; y++)
             {
                 Console.Write(y);
@@ -83,7 +99,7 @@ namespace ConnectFour
                     }
                     else
                     {
-                        Console.Write("|");
+                        Console.Write("| " + y);
                     }
                 }
 
@@ -175,7 +191,7 @@ namespace ConnectFour
                 {
                     Board[clmn, rowNum] = move;
 
-                    Undo.Push(new UndoMove(clmn, rowNum));
+                    Undo.Push(new GameMoves(clmn, rowNum, 0));
                 }
 
                 MoveUndo();
@@ -183,6 +199,8 @@ namespace ConnectFour
                 player = !player;
 
                 PrintBoard();
+                
+                Replay.Enqueue(new GameMoves(clmn, rowNum, move));
 
                 if (GameWon(move))
                 {
@@ -218,7 +236,7 @@ namespace ConnectFour
                 {
                     move = 1;
 
-                    Console.WriteLine("Enter player 1 column: ");
+                    Console.WriteLine("Enter player column: ");
 
                     string column = Console.ReadLine();
 
@@ -258,14 +276,18 @@ namespace ConnectFour
                     {
                         Board[clmn, rowNum] = move;
 
-                        Undo.Push(new UndoMove(clmn, rowNum));
+                        Undo.Push(new GameMoves(clmn, rowNum, 0));
 
                         MoveUndo();
+
+                        Replay.Enqueue(new GameMoves(clmn, rowNum, move));
                     }
                 }
                 else
                 {
                     Board[ai, aiRow] = move;
+
+                    Replay.Enqueue(new GameMoves(ai, aiRow, move));
                 }
 
                 player = !player;
@@ -448,19 +470,21 @@ namespace ConnectFour
         {
             string undoMove = "_";
 
-            while (undoMove != "u" && undoMove != "")
+            while (undoMove != "u" && undoMove != "U" && undoMove != "")
             {
+                Console.WriteLine("If you wish to undo press u, otherwise press enter to continue.");
+
                 undoMove = Console.ReadLine();
 
-                if (undoMove != "u" && undoMove != "")
+                if (undoMove != "u" && undoMove != "U" && undoMove != "")
                 {
                     Console.WriteLine("That is not valid input, try again.");
 
                     continue;
                 }
-                else if (undoMove == "u")
+                else if (undoMove == "u" || undoMove == "U")
                 {
-                    UndoMove undo = Undo.Pop();
+                    GameMoves undo = Undo.Pop();
 
                     Board[undo.X, undo.Y] = 0;
 
@@ -469,27 +493,72 @@ namespace ConnectFour
             }
         }
 
-        //Waits for a user input before exiting the game, allows user to be ablt to see who won, instead of immediately closing the console.
+        //Records the game moves, once the game has finished it allows the user to review the game from the starting move.
+        public static void GameReplay()
+        {
+            string replayGame = "_";
+
+            while (replayGame != "Y" && replayGame != "y" && replayGame != "")
+            {
+                Console.WriteLine("If you wish to review the game enter y, otherwise press enter to proceed to game exit.");
+
+                replayGame = Console.ReadLine();
+
+                if (replayGame == "Y" || replayGame == "y") 
+                {
+                    for (int x = 1; x < boardCol; x++)
+                    {
+                        for (int y = 1; y < boardRow; y++)
+                        {
+                            Board[x, y] = 0;
+                        }
+                    }
+
+                    for (int c = Replay.Count; c > 0; c--) 
+                    {
+                        GameMoves replay = Replay.Dequeue();
+
+                        Board[replay.X, replay.Y] = replay.Player;
+
+                        PrintBoard();
+                    }
+                } 
+                else if (replayGame != "Y" && replayGame != "y" && replayGame != "")
+                {
+                    Console.WriteLine("That is not valid input, try again.");
+
+                    continue;
+                }
+            }
+        }
+
+        //Waits for a user input before exiting the game, allows user to be able to see who won, instead of immediately closing the console.
         public static void GameExit()
         {
+            GameReplay();
+
             Console.WriteLine("Press any key to exit.");
 
             Console.ReadKey();
         }
     }
 
-    //Gets and sets the values needed to be able to do the MoveUndo method.
-    public class UndoMove
+    //Gets and sets the values needed to be able to do the MoveUndo and GameReplay methods.
+    public class GameMoves
     {
-        public UndoMove(int x, int y)
+        public GameMoves(int x, int y, int player)
         {
             this.X = x;
 
             this.Y = y;
+
+            this.Player = player;
         }
 
         public int X { get; set; }
 
         public int Y { get; set; }
+
+        public int Player { get; set; }
     }
 }

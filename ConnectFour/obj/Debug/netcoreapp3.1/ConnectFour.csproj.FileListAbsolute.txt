@@ -20,3 +20,14 @@ C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\obj\Debug\netcoreapp3.1\Connec
 C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.AssemblyInfo.cs
 C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.dll
 C:\Users\Chat\Documents\Chat\Uni\A&DS\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.pdb
+C:\Users\Chat\Documents\Chat\Uni\A&DS\CW\Brandani_Caterina_ADS-master\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.exe
+C:\Users\Chat\Documents\Chat\Uni\A&DS\CW\Brandani_Caterina_ADS-master\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.deps.json
+C:\Users\Chat\Documents\Chat\Uni\A&DS\CW\Brandani_Caterina_ADS-master\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.runtimeconfig.json
+C:\Users\Chat\Documents\Chat\Uni\A&DS\CW\Brandani_Caterina_ADS-master\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.runtimeconfig.dev.json
+C:\Users\Chat\Documents\Chat\Uni\A&DS\CW\Brandani_Caterina_ADS-master\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.dll
+C:\Users\Chat\Documents\Chat\Uni\A&DS\CW\Brandani_Caterina_ADS-master\ConnectFour\bin\Debug\netcoreapp3.1\ConnectFour.pdb
+C:\Users\Chat\Documents\Chat\Uni\A&DS\CW\Brandani_Caterina_ADS-master\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.csprojAssemblyReference.cache
+C:\Users\Chat\Documents\Chat\Uni\A&DS\CW\Brandani_Caterina_ADS-master\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.AssemblyInfoInputs.cache
+C:\Users\Chat\Documents\Chat\Uni\A&DS\CW\Brandani_Caterina_ADS-master\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.AssemblyInfo.cs
+C:\Users\Chat\Documents\Chat\Uni\A&DS\CW\Brandani_Caterina_ADS-master\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.dll
+C:\Users\Chat\Documents\Chat\Uni\A&DS\CW\Brandani_Caterina_ADS-master\ConnectFour\obj\Debug\netcoreapp3.1\ConnectFour.pdb
