@@ -32,6 +32,8 @@ namespace ConnectFour
                 }
             }
 
+            Console.WriteLine("Welcome to Connect 4!\nThis is a console version of the classic game where each player tries to connect 4 tiles in a row.\nThis can be done horizontally, vertically and in a diagonal.");
+
             Console.WriteLine("Do you wish to play against the AI or a human counterpart?\nEnter c for computer or h for human:\n(Otherwise if you wish to watch the AI's dish it out enter a)");
 
             string pcOrPeeps = "";
@@ -194,11 +196,11 @@ namespace ConnectFour
                     Undo.Push(new GameMoves(clmn, rowNum, 0));
                 }
 
+                PrintBoard();
+
                 MoveUndo();
 
                 player = !player;
-
-                PrintBoard();
 
                 Replay.Enqueue(new GameMoves(clmn, rowNum, move));
 
@@ -210,7 +212,7 @@ namespace ConnectFour
 
                     return;
                 }
-                else if (TotalMoves() && !GameWon(move))
+                else if (GameTied() && !GameWon(move))
                 {
                     Console.WriteLine("The game has been tied, neither player wins.");
 
@@ -278,6 +280,8 @@ namespace ConnectFour
 
                         Undo.Push(new GameMoves(clmn, rowNum, 0));
 
+                        PrintBoard();
+
                         MoveUndo();
 
                         Replay.Enqueue(new GameMoves(clmn, rowNum, move));
@@ -287,12 +291,12 @@ namespace ConnectFour
                 {
                     Board[ai, aiRow] = move;
 
+                    PrintBoard();
+
                     Replay.Enqueue(new GameMoves(ai, aiRow, move));
                 }
 
                 player = !player;
-
-                PrintBoard();
 
                 if (GameWon(move))
                 {
@@ -313,7 +317,7 @@ namespace ConnectFour
                         return;
                     }
                 }
-                else if (TotalMoves() && !GameWon(move))
+                else if (GameTied() && !GameWon(move))
                 {
                     Console.WriteLine("The game has been tied, neither player wins.");
 
@@ -372,7 +376,7 @@ namespace ConnectFour
 
                     return;
                 }
-                else if (TotalMoves() && !GameWon(move))
+                else if (GameTied() && !GameWon(move))
                 {
                     Console.WriteLine("The game has been tied, neither AI wins.");
 
@@ -384,7 +388,7 @@ namespace ConnectFour
         }
 
         //Checks whether the board is full.
-        public static bool TotalMoves()
+        public static bool GameTied()
         {
             if (Replay.Count < ((boardCol - 1) * (boardRow - 1)))
             {
@@ -487,6 +491,8 @@ namespace ConnectFour
                     Board[undo.X, undo.Y] = 0;
 
                     player = !player;
+
+                    PrintBoard();
                 }
             }
         }
@@ -519,6 +525,10 @@ namespace ConnectFour
                         Board[replay.X, replay.Y] = replay.Player;
 
                         PrintBoard();
+
+                        Console.WriteLine("Press any key to continue.");
+
+                        Console.ReadKey();
                     }
                 }
                 else if (replayGame != "Y" && replayGame != "y" && replayGame != "")
